@@ -173,6 +173,7 @@
 
   var data = {};
 
+
   function logData(doc){
     console.log(doc.id);
 
@@ -186,13 +187,14 @@
 
   });
       
+
   var docRef = db.collection('models').doc('round1');
   var round1Model = {};
-
+  //just get one document
 docRef.get().then(function(doc) {
     if (doc.exists) {
         round1Model = doc.data();
-        console.log("Document data:", round1Model.A[1]);
+        console.log("Document data:", round1Model.A[2]);
     } else {
         // doc.data() will be undefined in this case
         console.log("No such document!");
@@ -201,6 +203,7 @@ docRef.get().then(function(doc) {
     console.log("Error getting document:", error);
 });
 
+console.log(round1Model);
 
 
 

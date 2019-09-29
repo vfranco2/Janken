@@ -32,24 +32,26 @@ function play(e) {
   showWinner(winner, curComputerChoice);
 
 //Informed Bot logic
-    if (historyChoice === "r" && historyWin === false){
-        nextComputerChoice = "r";
-     } else if(historyChoice === "p" && historyWin === false){
-        nextComputerChoice = "p";
-    } else if(historyChoice === "s" && historyWin === false){
-        nextComputerChoice = "s";
-     } else if(historyChoice === "r" && historyWin === true){
-        nextComputerChoice = "p";
-     } else if(historyChoice === "p" && historyWin === true){
-        nextComputerChoice = "s";
-     } else if(historyChoice === "s" && historyWin === true){
-        nextComputerChoice = "r";
+    if (historyChoice === "rock" && historyWin === false){
+        nextComputerChoice = "rock";
+     } else if(historyChoice === "paper" && historyWin === false){
+        nextComputerChoice = "paper";
+    } else if(historyChoice === "scissors" && historyWin === false){
+        nextComputerChoice = "scissors";
+     } else if(historyChoice === "rock" && historyWin === true){
+        nextComputerChoice = "paper";
+     } else if(historyChoice === "paper" && historyWin === true){
+        nextComputerChoice = "scissors";
+     } else if(historyChoice === "scissors" && historyWin === true){
+        nextComputerChoice = "rock";
     } else{
-        nextComputerChoice = "r";
+        nextComputerChoice = "rock";
     }
 
-  var results = compare(userChoice,computerChoice);
-  var printRes = ("Last round won? "+historyWin+"<br>Last pick: "+historyChoice+"<br>Your hand: "+userChoice+"<br>Bot's hand: "+curComputerChoice+"<br>"+results)
+//   var results = compare(userChoice,computerChoice);
+  var results = getResults(userChoice,computerChoice);
+
+  var printRes = ("Last round won? "+historyWin+"<br>Last pick: "+historyChoice+"<br>Your hand: "+userChoice+"<br>Bot's hand: "+curComputerChoice+"<br>"+"Result: "+results)
 
   //assign historical values for next round
   historyChoice = userChoice;
@@ -103,6 +105,38 @@ function getComputerChoice() {
                       return "You win!";}
                 }
             };
+
+// Get game results
+function getResults(p, c) {
+    if (p === c) {
+      curWin = null;
+      return 'draw';
+    } else if (p === 'rock') {
+      if (c === 'paper') {
+        curWin = false;
+        return 'computer wins!';
+      } else {
+        curWin = true;
+        return 'you win!';
+      }
+    } else if (p === 'paper') {
+      if (c === 'scissors') {
+        curWin = false;
+        return 'computer wins!';
+      } else {
+        curWin = true;
+        return 'you win!';
+      }
+    } else if (p === 'scissors') {
+      if (c === 'rock') {
+        curWin = false;
+        return 'computer wins!';
+      } else {
+        curWin = true;
+        return 'you win!';
+      }
+    }
+  }
 
 // Get game winner
 function getWinner(p, c) {
