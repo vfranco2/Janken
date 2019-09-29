@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 :root {
-  --primary-color: #1e6dff;
+  --primary-color: #b30625;
   --dark-color: #333333;
   --light-color: #f4f4f4;
   --lose-color: #dc3545;
@@ -20,6 +20,13 @@ body {
   line-height: 1.6;
   background: #fff;
   color: #333;
+  padding: 5%;
+}
+h1{font-family:"Helvetica Neue",sans-serif;line-height:1;font-weight:300;margin-bottom:1em;}
+h2{font-family:"Helvetica Neue",sans-serif;line-height:1;
+    font-weight:300;
+    margin-bottom:1em;
+    font-style: italic;
 }
 
 .container {
@@ -54,6 +61,11 @@ body {
 
 .header h1 {
   margin-bottom: 1rem;
+  font-weight:300;
+  font-size: 2.5rem;
+
+  /* font-style: italic; */
+
 }
 
 .header h2 {
@@ -109,7 +121,7 @@ body {
 .statsContainer {
     margin: auto;
   width: 50%;
-  border: 3px solid green;
+  border: 3px solid rgb(196, 45, 45);
   margin-top: 50px;
   padding: 30px;
 }
@@ -154,6 +166,15 @@ body {
   font-size: 1.2rem;
   margin-top: 1rem;
 }
+
+
+/* Vlad style sheets */
+::selection{background:#fb9fe5;text-shadow:none}
+a{color:#0088CC;text-decoration:none;outline:0}
+a:hover{color:#005580}
+a img{border:none}img{max-width:100%}
+html{font-size:100%}
+.game{padding:2em;background:#eee;}
 
 @keyframes modalopen {
   from {

@@ -50,7 +50,107 @@
     </div>
   </div>
 
-  <div class="statsContainer"></div>
+  <!-- Vlad's Informed Bot -->
+  <div class="statsContainer">
+      <h1>INFORMED BOT</h1>
+
+
+      <div class="game">
+          Enter hand: <input type="text" id="myHand">
+          <button onclick="enterHand()">Enter</button>
+          <p id="disp"></p>
+      
+          <script>
+              var userChoice
+              var computerChoice
+      
+              //store your last choice
+              var historyChoice
+              //temporarily store current win/loss condition
+              var curWin
+              //store win/loss for next round
+              var historyWin
+      
+              function enterHand(){
+                userChoice = document.getElementById("myHand").value;
+      
+      
+              computerChoice = Math.random();
+              if (computerChoice < 0.34) {
+                  computerChoice = "r";
+              } else if(computerChoice <= 0.67) {
+                  computerChoice = "p";
+              } else {
+                  computerChoice = "s";
+              }
+      
+              if (historyChoice === "r" && historyWin === false){
+                computerChoice = "r";
+              } else if(historyChoice === "p" && historyWin === false){
+                computerChoice = "p";
+              } else if(historyChoice === "s" && historyWin === false){
+                computerChoice = "s";
+              } else if(historyChoice === "r" && historyWin === true){
+                computerChoice = "p";
+              } else if(historyChoice === "p" && historyWin === true){
+                computerChoice = "s";
+              } else if(historyChoice === "s" && historyWin === true){
+                computerChoice = "r";
+              } else{
+                computerChoice = "r";
+              }
+      
+      
+      
+      
+      
+      
+              //compares choice1 (your choice) to choice2 (bot's choice)
+                var compare = function(choice1,choice2) {
+                    if (choice1 === choice2) {
+                      curWin = null;
+                      return "It's a tie!";}
+                    if (choice1 === "r") {
+                        if (choice2 === "s") {
+                          curWin = true;
+                          return "You win!";}
+                        else {
+                          curWin = false;
+                          return "You lose!";}
+                    }
+                    if (choice1 === "p") {
+                        if (choice2 === "r") {
+                          curWin = true;
+                          return "You win!";}
+                        else {
+                          curWin = false;
+                          return "You lose!";}
+                    }
+                    if (choice1 === "s") {
+                        if (choice2 === "r") {
+                          curWin = false;
+                          return "You lose!";}
+                        else {
+                          curWin = true;
+                          return "You win!";}
+                    }
+                };
+      
+      
+                var results = compare(userChoice,computerChoice);
+                var printres = ("Last round won? "+historyWin+"<br>Last pick: "+historyChoice+"<br>Your hand: "+userChoice+"<br>Bot's hand: "+computerChoice+"<br>"+results)
+      
+                //assign historical values for next round
+                historyChoice = userChoice;
+                historyWin = curWin
+                document.getElementById("disp").innerHTML = printres;
+              }
+      
+          </script>
+      
+      </div>
+
+  </div>
 
 
   <!-- Modal -->
