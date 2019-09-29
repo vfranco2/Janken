@@ -28,11 +28,12 @@
       <button id="restart" class="restart-btn">Restart Game</button>
       <div id="score" class="score">
         <p>Player: 0</p>
-        <p>Computer: 0</p>
+        <p>Computer-AI: 0</p>
       </div>
     </header>
 
-    <h2>Make Your Selection</h2>
+    <h2>Round: </h2> 
+    <h2 id="round">1</h2>
     <div class="choices">
     
       <i id="rock" class="choice far fa-hand-rock fa-7x"></i>
@@ -43,105 +44,12 @@
 
   <!-- Vlad's Informed Bot -->
   <div class="statsContainer">
-      <h1>INFORMED BOT</h1>
-
-
+      <h1>Statistics</h1>
       <div class="game">
-          Enter hand: <input type="text" id="myHand">
-          <button onclick="enterHand()">Enter</button>
           <p id="disp"></p>
-      
-      <script>
-              var userChoice
-              var computerChoice
-      
-              //store your last choice
-              var historyChoice
-              //temporarily store current win/loss condition
-              var curWin
-              //store win/loss for next round
-              var historyWin
-      
-          function enterHand(){
-              userChoice = document.getElementById("myHand").value;
-      
-      
-              computerChoice = Math.random();
-              if (computerChoice < 0.34) {
-                  computerChoice = "r";
-              } else if(computerChoice <= 0.67) {
-                  computerChoice = "p";
-              } else {
-                  computerChoice = "s";
-              }
-      
-              if (historyChoice === "r" && historyWin === false){
-                computerChoice = "r";
-              } else if(historyChoice === "p" && historyWin === false){
-                computerChoice = "p";
-              } else if(historyChoice === "s" && historyWin === false){
-                computerChoice = "s";
-              } else if(historyChoice === "r" && historyWin === true){
-                computerChoice = "p";
-              } else if(historyChoice === "p" && historyWin === true){
-                computerChoice = "s";
-              } else if(historyChoice === "s" && historyWin === true){
-                computerChoice = "r";
-              } else{
-                computerChoice = "r";
-              }
-      
-      
-      
-                var results = compare(userChoice,computerChoice);
-                var printRes = ("Last round won? "+historyWin+"<br>Last pick: "+historyChoice+"<br>Your hand: "+userChoice+"<br>Bot's hand: "+computerChoice+"<br>"+results)
-      
-                //assign historical values for next round
-                historyChoice = userChoice;
-                historyWin = curWin
-                document.getElementById("disp").innerHTML = printRes;
-              }
-
-
-              //compares choice1 (your choice) to choice2 (bot's choice)
-              // input: a character 'r', 'p', or 's'
-              var compare = function(choice1,choice2) {
-                    if (choice1 === choice2) {
-                      curWin = null;
-                      return "It's a tie!";}
-                    if (choice1 === "r") {
-                        if (choice2 === "s") {
-                          curWin = true;
-                          return "You win!";}
-                        else {
-                          curWin = false;
-                          return "You lose!";}
-                    }
-                    if (choice1 === "p") {
-                        if (choice2 === "r") {
-                          curWin = true;
-                          return "You win!";}
-                        else {
-                          curWin = false;
-                          return "You lose!";}
-                    }
-                    if (choice1 === "s") {
-                        if (choice2 === "r") {
-                          curWin = false;
-                          return "You lose!";}
-                        else {
-                          curWin = true;
-                          return "You win!";}
-                    }
-                };
-      
-      
-        </script>
-      
       </div>
 
   </div>
-
 
   <!-- Modal -->
   <div class="modal">
@@ -155,62 +63,13 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
 <script>
-  // Your web app's Firebase configuration
-  var firebaseConfig = {
-    apiKey: "AIzaSyB28NG_7l5EWCQXuBkju3WJ108jKSeX2zo",
-    authDomain: "janken-9cb14.firebaseapp.com",
-    databaseURL: "https://janken-9cb14.firebaseio.com",
-    projectId: "janken-9cb14",
-    storageBucket: "janken-9cb14.appspot.com",
-    messagingSenderId: "1070635907496",
-    appId: "1:1070635907496:web:c975ee953c21d7de71c59d"
-  };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-
-  // Create db reference
-  const db = firebase.firestore();
-
-  var data = {};
-
-
-  function logData(doc){
-    console.log(doc.id);
-
-  }
-
-  //Get whole collections and log all documents
-  db.collection('models').get().then((snapshot) => {
-      snapshot.docs.forEach(doc => {
-        console.log(doc.id, ' => ', doc.data());
-      })
-
-  });
-      
-
-  var docRef = db.collection('models').doc('round1');
-  var round1Model = {};
-  //just get one document
-docRef.get().then(function(doc) {
-    if (doc.exists) {
-        round1Model = doc.data();
-        console.log("Document data:", round1Model.A[2]);
-    } else {
-        // doc.data() will be undefined in this case
-        console.log("No such document!");
-    }
-}).catch(function(error) {
-    console.log("Error getting document:", error);
-});
-
-console.log(round1Model);
-
-
-
+ //placeholder for Firebase code
 
 </script>
 
 <!-- Our core logic, etc to run here -->
+<!-- <script src="js/markov.js"></script> -->
 <script src="js/main.js"></script>
+
 </body>
 </html>

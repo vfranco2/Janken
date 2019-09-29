@@ -13,8 +13,8 @@ const scoreboard = {
 // <p> tag used to display historical stats
 var elStatsDisplay = document.getElementById("disp");
 
-//store the bot's next move
-var nextComputerChoice;
+//store the bot's move
+var computerChoice;
 //store your last choice
 var historyChoice;
 //temporarily store current win/loss condition
@@ -27,31 +27,60 @@ function play(e) {
 //User GUI gameplay 
   restart.style.display = 'inline-block';
   const userChoice = e.target.id;
-  const curComputerChoice = getComputerChoice();
-  const winner = getWinner(userChoice, curComputerChoice);
-  showWinner(winner, curComputerChoice);
+  
 
 //Informed Bot logic
     if (historyChoice === "rock" && historyWin === false){
-        nextComputerChoice = "rock";
+        computerChoice = "rock";
      } else if(historyChoice === "paper" && historyWin === false){
-        nextComputerChoice = "paper";
+        computerChoice = "paper";
     } else if(historyChoice === "scissors" && historyWin === false){
-        nextComputerChoice = "scissors";
+        computerChoice = "scissors";
      } else if(historyChoice === "rock" && historyWin === true){
-        nextComputerChoice = "paper";
+        computerChoice = "paper";
      } else if(historyChoice === "paper" && historyWin === true){
-        nextComputerChoice = "scissors";
+        computerChoice = "scissors";
      } else if(historyChoice === "scissors" && historyWin === true){
-        nextComputerChoice = "rock";
+        computerChoice = "rock";
     } else{
-        nextComputerChoice = "rock";
+        computerChoice = "rock";
     }
 
-//   var results = compare(userChoice,computerChoice);
-  var results = getResults(userChoice,computerChoice);
+    var compare = function(choice1,choice2) {
+        if (choice1 === choice2) {
+          curWin = null;
+          return "draw";}
+        if (choice1 === "rock" ) {
+            if (choice2 === "scissors") {
+              curWin = true;
+              return "player";}
+            else {
+              curWin = false;
+              return "computer";}
+        }
+        if (choice1 === "paper") {
+            if (choice2 === "rock") {
+              curWin = true;
+              return "player";}
+            else {
+              curWin = false;
+              return "computer";}
+        }
+        if (choice1 === "scissors") {
+            if (choice2 === "paper") {
+              curWin = true;
+              return "player";}
+            else {
+              curWin = false;
+              return "computer";}
+        }
+    };
+    const winner = compare(userChoice, computerChoice);
 
-  var printRes = ("Last round won? "+historyWin+"<br>Last pick: "+historyChoice+"<br>Your hand: "+userChoice+"<br>Bot's hand: "+curComputerChoice+"<br>"+"Result: "+results)
+  showWinner(winner, computerChoice);
+  var results = compare(userChoice,computerChoice);
+
+  var printRes = ("Last round won: "+historyWin+"<br>Last pick: "+historyChoice+"<br>Your hand: "+userChoice+"<br>Bot's hand: "+computerChoice+"<br>"+"Result: "+results);
 
   //assign historical values for next round
   historyChoice = userChoice;
@@ -61,135 +90,30 @@ function play(e) {
 
 }
 
-// Get computers choice
-function getComputerChoice() {
-  const rand = Math.random();
-  if (rand < 0.34) {
-    return 'rock';
-  } else if (rand <= 0.67) {
-    return 'paper';
-  } else {
-    return 'scissors';
-  }
-}
-
-//Vlad - Informed bot
-//compares choice1 (your choice) to choice2 (bot's choice)
-// input: a character 'r', 'p', or 's'
-        var compare = function(choice1,choice2) {
-                if (choice1 === choice2) {
-                  curWin = null;
-                  return "It's a tie!";}
-                if (choice1 === "r" ||choice1 === "rock" ) {
-                    if (choice2 === "s" || choice2 === "scissors") {
-                      curWin = true;
-                      return "You win!";}
-                    else {
-                      curWin = false;
-                      return "You lose!";}
-                }
-                if (choice1 === "p"|| choice1 === "paper") {
-                    if (choice2 === "r") {
-                      curWin = true;
-                      return "You win!";}
-                    else {
-                      curWin = false;
-                      return "You lose!";}
-                }
-                if (choice1 === "s" || choice1 === "scissors") {
-                    if (choice2 === "r" || choice2 === "rock") {
-                      curWin = false;
-                      return "You lose!";}
-                    else {
-                      curWin = true;
-                      return "You win!";}
-                }
-            };
-
-// Get game results
-function getResults(p, c) {
-    if (p === c) {
-      curWin = null;
-      return 'draw';
-    } else if (p === 'rock') {
-      if (c === 'paper') {
-        curWin = false;
-        return 'computer wins!';
-      } else {
-        curWin = true;
-        return 'you win!';
-      }
-    } else if (p === 'paper') {
-      if (c === 'scissors') {
-        curWin = false;
-        return 'computer wins!';
-      } else {
-        curWin = true;
-        return 'you win!';
-      }
-    } else if (p === 'scissors') {
-      if (c === 'rock') {
-        curWin = false;
-        return 'computer wins!';
-      } else {
-        curWin = true;
-        return 'you win!';
-      }
-    }
-  }
-
-// Get game winner
-function getWinner(p, c) {
-  if (p === c) {
-    return 'draw';
-  } else if (p === 'rock') {
-    if (c === 'paper') {
-      return 'computer';
-    } else {
-      return 'player';
-    }
-  } else if (p === 'paper') {
-    if (c === 'scissors') {
-      return 'computer';
-    } else {
-      return 'player';
-    }
-  } else if (p === 'scissors') {
-    if (c === 'rock') {
-      return 'computer';
-    } else {
-      return 'player';
-    }
-  }
-}
-
-function showWinner(winner, computerChoice) {
-  if (winner === 'player') {
+function showWinner(compare, computerChoice) {
+  if (compare === 'player') {
     // Inc player score
     scoreboard.player++;
     // Show modal result
     result.innerHTML = `
       <h1 class="text-win">You Win</h1>
       <i class="fas fa-hand-${computerChoice} fa-10x"></i>
-      <p>Computer Chose <strong>${computerChoice.charAt(0).toUpperCase() +
-        computerChoice.slice(1)}</strong></p>
+      <p>Computer Chose <strong>${computerChoice}</strong></p>
     `;
-  } else if (winner === 'computer') {
+  } else if (compare === 'computer') {
     // Inc computer score
     scoreboard.computer++;
     // Show modal result
     result.innerHTML = `
       <h1 class="text-lose">You Lose</h1>
       <i class="fas fa-hand-${computerChoice} fa-10x"></i>
-      <p>Computer Chose <strong>${computerChoice.charAt(0).toUpperCase() +
-        computerChoice.slice(1)}</strong></p>
+      <p>Computer Chose <strong>${computerChoice}</strong></p>
     `;
   } else {
     result.innerHTML = `
       <h1>It's A Draw</h1>
       <i class="fas fa-hand-${computerChoice} fa-10x"></i>
-      <p>Computer Chose <strong>${computerChoice.charAt(0).toUpperCase() +
-        computerChoice.slice(1)}</strong></p>
+      <p>Computer Chose <strong>${computerChoice}</strong></p>
     `;
   }
   // Show score
