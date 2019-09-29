@@ -34,16 +34,7 @@
 
     <h2>Make Your Selection</h2>
     <div class="choices">
-      <!-- <div class="containerBorder">
-        <i id="rock" class="choice far fa-hand-rock fa-7x"></i>
-      </div>
-      <div class="containerBorder">
-          <i id="paper" class="choice far fa-hand-paper fa-7x"></i>
-        </div>
-        <div class="containerBorder">
-            <i id="scissors" class="choice far fa-hand-scissors fa-7x"></i>
-          </div>
-           -->
+    
       <i id="rock" class="choice far fa-hand-rock fa-7x"></i>
       <i id="paper" class="choice far fa-hand-paper fa-7x"></i>
       <i id="scissors" class="choice far fa-hand-scissors fa-7x"></i>
@@ -60,7 +51,7 @@
           <button onclick="enterHand()">Enter</button>
           <p id="disp"></p>
       
-          <script>
+      <script>
               var userChoice
               var computerChoice
       
@@ -71,8 +62,8 @@
               //store win/loss for next round
               var historyWin
       
-              function enterHand(){
-                userChoice = document.getElementById("myHand").value;
+          function enterHand(){
+              userChoice = document.getElementById("myHand").value;
       
       
               computerChoice = Math.random();
@@ -102,11 +93,19 @@
       
       
       
+                var results = compare(userChoice,computerChoice);
+                var printRes = ("Last round won? "+historyWin+"<br>Last pick: "+historyChoice+"<br>Your hand: "+userChoice+"<br>Bot's hand: "+computerChoice+"<br>"+results)
       
-      
-      
+                //assign historical values for next round
+                historyChoice = userChoice;
+                historyWin = curWin
+                document.getElementById("disp").innerHTML = printRes;
+              }
+
+
               //compares choice1 (your choice) to choice2 (bot's choice)
-                var compare = function(choice1,choice2) {
+              // input: a character 'r', 'p', or 's'
+              var compare = function(choice1,choice2) {
                     if (choice1 === choice2) {
                       curWin = null;
                       return "It's a tie!";}
@@ -137,16 +136,7 @@
                 };
       
       
-                var results = compare(userChoice,computerChoice);
-                var printres = ("Last round won? "+historyWin+"<br>Last pick: "+historyChoice+"<br>Your hand: "+userChoice+"<br>Bot's hand: "+computerChoice+"<br>"+results)
-      
-                //assign historical values for next round
-                historyChoice = userChoice;
-                historyWin = curWin
-                document.getElementById("disp").innerHTML = printres;
-              }
-      
-          </script>
+        </script>
       
       </div>
 
