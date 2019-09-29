@@ -1,0 +1,123 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Janken - Rock, Paper, Scissors</title>
+  <meta name="description" content="An AI for RPS">
+  <meta name="author" content="Franco,Lavins">
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.0.0/firebase-firestore.js"></script>
+
+
+  <script src="https://kit.fontawesome.com/2a4dbb3373.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/styles.css">
+
+</head>
+
+<body>
+
+  <div class="container">
+    <header class="header">
+      <h1>Janken</h1>
+      <h2>The art of rock, paper, scissors</h2>
+
+      <button id="restart" class="restart-btn">Restart Game</button>
+      <div id="score" class="score">
+        <p>Player: 0</p>
+        <p>Computer: 0</p>
+      </div>
+    </header>
+
+    <h2>Make Your Selection</h2>
+    <div class="choices">
+      <!-- <div class="containerBorder">
+        <i id="rock" class="choice far fa-hand-rock fa-7x"></i>
+      </div>
+      <div class="containerBorder">
+          <i id="paper" class="choice far fa-hand-paper fa-7x"></i>
+        </div>
+        <div class="containerBorder">
+            <i id="scissors" class="choice far fa-hand-scissors fa-7x"></i>
+          </div>
+           -->
+      <i id="rock" class="choice far fa-hand-rock fa-7x"></i>
+      <i id="paper" class="choice far fa-hand-paper fa-7x"></i>
+      <i id="scissors" class="choice far fa-hand-scissors fa-7x"></i>
+    </div>
+  </div>
+
+  <div class="statsContainer"></div>
+
+
+  <!-- Modal -->
+  <div class="modal">
+    <div id="result" class="modal-content"></div>
+  </div>
+
+
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyB28NG_7l5EWCQXuBkju3WJ108jKSeX2zo",
+    authDomain: "janken-9cb14.firebaseapp.com",
+    databaseURL: "https://janken-9cb14.firebaseio.com",
+    projectId: "janken-9cb14",
+    storageBucket: "janken-9cb14.appspot.com",
+    messagingSenderId: "1070635907496",
+    appId: "1:1070635907496:web:c975ee953c21d7de71c59d"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Create db reference
+  const db = firebase.firestore();
+
+  var data = {};
+
+  function logData(doc){
+    console.log(doc.id);
+
+  }
+
+  //Get whole collections and log all documents
+  db.collection('models').get().then((snapshot) => {
+      snapshot.docs.forEach(doc => {
+        console.log(doc.id, ' => ', doc.data());
+      })
+
+  });
+      
+  var docRef = db.collection('models').doc('round1');
+  var round1Model = {};
+
+docRef.get().then(function(doc) {
+    if (doc.exists) {
+        round1Model = doc.data();
+        console.log("Document data:", round1Model.A[1]);
+    } else {
+        // doc.data() will be undefined in this case
+        console.log("No such document!");
+    }
+}).catch(function(error) {
+    console.log("Error getting document:", error);
+});
+
+
+
+
+
+</script>
+
+<!-- Our core logic, etc to run here -->
+<script src="js/main.js"></script>
+</body>
+</html>
